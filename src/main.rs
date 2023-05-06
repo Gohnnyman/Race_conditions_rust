@@ -22,15 +22,26 @@ impl Philosopher {
     }
 
     fn eat(&self, table: &Table) {
-        println!("{} is hungry.", self.index);
+        loop {
+            println!("{} is hungry.", self.index);
 
-        let _left = table.forks[self.left()].lock().unwrap();
-        let _right = table.forks[self.right()].lock().unwrap();
+            let _left = table.forks[self.left()].lock().unwrap();
+            let _right = table.forks[self.right()].try_lock();
 
-        println!("{} is eating.", self.index);
+            if _right.is_err() {
+                drop(_left);
+                println!("{} is waiting.", self.index);
 
-        let rand_ms = rand::random::<u64>() % 5000;
-        thread::sleep(Duration::from_millis(rand_ms));
+                let rand_ms = rand::random::<u64>() % 1000;
+                thread::sleep(Duration::from_millis(rand_ms));
+                continue;
+            }
+
+            println!("{} is eating.", self.index);
+
+            let rand_ms = rand::random::<u64>() % 5000;
+            thread::sleep(Duration::from_millis(rand_ms));
+        }
     }
 
     fn think(&self) {
