@@ -7,3 +7,9 @@ edition = "2021"
 [dependencies]
 rand = "*"
 
+[features]
+default = []
+matrix = []
+race = []
+
+
