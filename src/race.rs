@@ -1,5 +1,4 @@
 use std::{
-    io::{stdin, stdout, Write},
     println,
     sync::{
         atomic::{AtomicU32, Ordering},
@@ -18,7 +17,7 @@ impl RawPtr {
 unsafe impl Send for RawPtr {}
 unsafe impl Sync for RawPtr {}
 
-const REPEATS: usize = 1000000;
+const REPEATS: usize = 10000;
 
 pub fn run() {
     let mut time = time::Instant::now();

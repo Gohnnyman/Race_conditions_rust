@@ -1,7 +1,4 @@
-use std::{
-    io::{stdin, stdout, Write},
-    thread, time,
-};
+use std::thread;
 
 use rand::Rng;
 
